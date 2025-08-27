@@ -1,0 +1,5 @@
+{
+  "name": "CrewAI App Weaver",
+  "description": "An elite, feature-rich, interactive platform to generate web applications using a simulated multi-agent AI system. Define your app, watch the AI agents collaborate in real-time, and get a live preview of the final product.",
+  "requestFramePermissions": []
+}
