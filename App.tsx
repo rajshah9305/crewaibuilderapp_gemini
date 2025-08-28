@@ -10,6 +10,7 @@ import { AppPreview } from './components/AppPreview';
 import { SettingsModal } from './components/SettingsModal';
 import { AppState, AgentLog, Settings, Project } from './types';
 import { generateApp } from './services/geminiService';
+import { WelcomeScreen } from './components/WelcomeScreen';
 
 type Theme = 'light' | 'dark';
 type View = 'dashboard' | 'my-apps';
@@ -25,10 +26,18 @@ const App: React.FC = () => {
   const [theme, setTheme] = useState<Theme>('light');
   const [activeTab, setActiveTab] = useState<'workflow' | 'code'>('workflow');
   const [activeView, setActiveView] = useState<View>('dashboard');
+  const [showWelcomeScreen, setShowWelcomeScreen] = useState(true);
   
   useEffect(() => {
     document.documentElement.className = theme;
   }, [theme]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowWelcomeScreen(false);
+    }, 4000); 
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleDeleteProject = (projectId: string) => {
     setProjects(prev => prev.filter(p => p.id !== projectId));
@@ -195,53 +204,68 @@ const App: React.FC = () => {
   };
   
   return (
-    <div className="flex h-screen bg-light-bg dark:bg-dark-bg text-light-text-primary dark:text-dark-text-primary font-sans transition-colors duration-300">
-      <Sidebar 
-        activeView={activeView}
-        onNavigate={handleNavigate} 
-        theme={theme}
-        setTheme={setTheme}
-        onOpenSettings={() => setIsSettingsOpen(true)}
-        onSignOut={handleSignOut}
-      />
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <Header 
-            projectName={activeProject?.name}
-            projectStatus={activeProject?.status}
-            onBack={() => setActiveProjectId(null)}
-        />
-        <main className="flex-1 p-4 sm:p-8 overflow-y-auto">
-          <AnimatePresence mode="wait">
-            {activeProject ? renderWorkspace(activeProject) : (
-                <motion.div
+    <AnimatePresence mode="wait">
+      {showWelcomeScreen ? (
+        <WelcomeScreen key="welcome" onFinish={() => setShowWelcomeScreen(false)} />
+      ) : (
+        <motion.div
+          key="main-app"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex h-screen bg-light-bg dark:bg-dark-bg text-light-text-primary dark:text-dark-text-primary font-sans transition-colors duration-300"
+        >
+          <Sidebar
+            activeView={activeView}
+            onNavigate={handleNavigate}
+            theme={theme}
+            setTheme={setTheme}
+            onOpenSettings={() => setIsSettingsOpen(true)}
+            onSignOut={handleSignOut}
+          />
+          <div className="flex-1 flex flex-col overflow-hidden">
+            <Header
+              projectName={activeProject?.name}
+              projectStatus={activeProject?.status}
+              onBack={() => setActiveProjectId(null)}
+            />
+            <main className="flex-1 p-4 sm:p-8 overflow-y-auto">
+              <AnimatePresence mode="wait">
+                {activeProject ? (
+                  renderWorkspace(activeProject)
+                ) : (
+                  <motion.div
                     key="dashboard"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.3 }}
                     className="h-full"
-                >
+                  >
                     <Dashboard
-                        projects={displayedProjects}
-                        activeView={activeView}
-                        onNewProject={handleGenerate}
-                        onSelectProject={setActiveProjectId}
-                        onDeleteProject={handleDeleteProject}
-                        onRenameProject={handleRenameProject}
+                      projects={displayedProjects}
+                      activeView={activeView}
+                      onNewProject={handleGenerate}
+                      onSelectProject={setActiveProjectId}
+                      onDeleteProject={handleDeleteProject}
+                      onRenameProject={handleRenameProject}
                     />
-                </motion.div>
-            )}
-           </AnimatePresence>
-        </main>
-      </div>
-      {isSettingsOpen && (
-        <SettingsModal
-          settings={settings}
-          setSettings={setSettings}
-          onClose={() => setIsSettingsOpen(false)}
-        />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </main>
+          </div>
+          {isSettingsOpen && (
+            <SettingsModal
+              settings={settings}
+              setSettings={setSettings}
+              onClose={() => setIsSettingsOpen(false)}
+            />
+          )}
+        </motion.div>
       )}
-    </div>
+    </AnimatePresence>
   );
 };
 
