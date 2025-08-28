@@ -35,7 +35,7 @@ const ProjectActions: React.FC<{
     >
        <button 
         onClick={onRename}
-        className="w-full text-left flex items-center gap-2 px-3 py-1.5 text-sm text-light-text-primary dark:text-dark-text-primary hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-sm transition-colors"
+        className="w-full text-left flex items-center gap-2 px-3 py-1.5 text-sm text-light-text-primary dark:text-dark-text-primary hover:bg-slate-100 dark:hover:bg-black/20 rounded-sm transition-colors"
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L15.232 5.232z" /></svg>
         Rename
@@ -95,9 +95,9 @@ const ProjectCard: React.FC<{ project: Project; onSelect: (id: string) => void; 
 
     const getStatusChip = (status: Project['status']) => {
         switch(status) {
-            case 'GENERATING': return <div className="px-2 py-0.5 text-xs font-medium text-amber-800 bg-amber-100 dark:text-amber-200 dark:bg-amber-500/10 rounded-full">Generating</div>;
-            case 'COMPLETED': return <div className="px-2 py-0.5 text-xs font-medium text-green-800 bg-green-100 dark:text-green-200 dark:bg-green-500/10 rounded-full">Completed</div>;
-            case 'ERROR': return <div className="px-2 py-0.5 text-xs font-medium text-red-800 bg-red-100 dark:text-red-200 dark:bg-red-500/10 rounded-full">Error</div>;
+            case 'GENERATING': return <div className="px-2 py-0.5 text-xs font-medium text-amber-200 bg-amber-500/10 rounded-full border border-amber-500/20">Generating</div>;
+            case 'COMPLETED': return <div className="px-2 py-0.5 text-xs font-medium text-green-200 bg-green-500/10 rounded-full border border-green-500/20">Completed</div>;
+            case 'ERROR': return <div className="px-2 py-0.5 text-xs font-medium text-red-200 bg-red-500/10 rounded-full border border-red-500/20">Error</div>;
             default: return null;
         }
     }
@@ -113,16 +113,18 @@ const ProjectCard: React.FC<{ project: Project; onSelect: (id: string) => void; 
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
+            whileHover={{ scale: 1.05, y: -5 }}
             transition={{ duration: 0.2 }}
-            className={`relative group bg-light-panel dark:bg-dark-panel p-4 rounded-lg border-2 transition-all duration-300 ${isGenerating ? 'border-light-accent dark:border-dark-accent animate-border-pulse' : 'border-light-border dark:border-dark-border'}`}
+            className={`group relative bg-light-panel dark:bg-dark-panel p-4 rounded-lg border-2 transition-all duration-300 ${isGenerating ? 'border-dark-accent-primary animate-border-pulse' : 'border-light-border dark:border-dark-border hover:border-dark-accent-primary'}`}
+            style={{ boxShadow: isGenerating ? '0 0 20px rgba(249, 115, 22, 0.2)' : 'none' }}
         >
             <div 
                 className="h-full flex flex-col justify-between"
             >
               <div>
                 <div className="flex justify-between items-start mb-4">
-                    <div className="p-2 bg-light-accent/10 dark:bg-dark-accent/10 rounded-md group-hover:bg-light-accent/20 dark:group-hover:bg-dark-accent/20 transition-colors">
-                        <CoderIcon className="w-6 h-6 text-light-accent dark:text-dark-accent"/>
+                    <div className="p-2 bg-dark-accent-primary/10 rounded-md transition-colors">
+                        <CoderIcon className="w-6 h-6 text-dark-accent-primary"/>
                     </div>
                     {getStatusChip(project.status)}
                 </div>
@@ -134,10 +136,10 @@ const ProjectCard: React.FC<{ project: Project; onSelect: (id: string) => void; 
                         onChange={(e) => setNewName(e.target.value)}
                         onBlur={handleRename}
                         onKeyDown={handleKeyDown}
-                        className="w-full bg-light-bg dark:bg-dark-bg border border-light-border dark:border-dark-border rounded-md py-0 px-1 mb-1 font-semibold text-light-text-primary dark:text-dark-text-primary focus:ring-2 focus:ring-light-accent dark:focus:ring-dark-accent focus:outline-none"
+                        className="w-full bg-light-bg dark:bg-dark-bg border border-light-border dark:border-dark-border rounded-md py-0 px-1 mb-1 font-semibold text-light-text-primary dark:text-dark-text-primary focus:ring-2 focus:ring-dark-accent-primary focus:outline-none"
                     />
                 ) : (
-                    <h3 onClick={() => onSelect(project.id)} className="font-semibold text-light-text-primary dark:text-dark-text-primary mb-1 truncate group-hover:text-light-accent dark:group-hover:text-dark-accent transition-colors cursor-pointer">{project.name}</h3>
+                    <h3 onClick={() => onSelect(project.id)} className="font-semibold text-light-text-primary dark:text-dark-text-primary mb-1 truncate group-hover:text-dark-accent-primary transition-colors cursor-pointer">{project.name}</h3>
                 )}
               </div>
               <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary mt-4">
@@ -147,7 +149,7 @@ const ProjectCard: React.FC<{ project: Project; onSelect: (id: string) => void; 
              <button 
                 onClick={handleMenuClick} 
                 aria-label="More options"
-                className="absolute top-3 right-3 p-1 rounded-full text-light-text-secondary dark:text-dark-text-secondary transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 hover:bg-slate-200 dark:hover:bg-slate-700/50"
+                className="absolute top-3 right-3 p-1 rounded-full text-light-text-secondary dark:text-dark-text-secondary transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 hover:bg-slate-200 dark:hover:bg-black/20"
              >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
              </button>
@@ -183,9 +185,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ projects, activeView, onNe
   if (activeView === 'my-apps' && projects.length === 0) {
       return (
          <div className="flex flex-col items-center justify-center text-center p-4 h-full animate-fade-in">
-            <div className="max-w-3xl w-full bg-light-panel dark:bg-dark-panel p-8 rounded-xl border border-light-border dark:border-dark-border shadow-xl">
-                 <div className="p-4 bg-light-accent/10 dark:bg-dark-accent/10 rounded-full mb-4 inline-block">
-                    <CodeIcon className="w-12 h-12 text-light-accent dark:text-dark-accent"/>
+            <div className="max-w-3xl w-full bg-light-panel dark:bg-dark-panel/80 backdrop-blur-md p-8 rounded-xl border border-light-border dark:border-dark-border shadow-xl">
+                 <div className="p-4 bg-dark-accent-primary/10 rounded-full mb-4 inline-block">
+                    <CodeIcon className="w-12 h-12 text-dark-accent-primary"/>
                 </div>
                 <h2 className="text-3xl font-bold text-light-text-primary dark:text-dark-text-primary mb-2">No Completed Apps Yet</h2>
                 <p className="text-lg text-light-text-secondary dark:text-dark-text-secondary">
@@ -204,19 +206,21 @@ export const Dashboard: React.FC<DashboardProps> = ({ projects, activeView, onNe
                 {activeView === 'dashboard' ? 'My Projects' : 'My Apps'}
             </h2>
             {activeView === 'dashboard' && (
-              <button 
+              <motion.button 
                   onClick={() => setIsCreating(true)}
-                  className="flex items-center gap-2 bg-light-accent dark:bg-dark-accent hover:bg-light-accent-hover dark:hover:bg-dark-accent-hover text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg"
+                  whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(249, 115, 22, 0.3)' }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center gap-2 bg-dark-accent-primary hover:bg-dark-accent-primary-hover text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 shadow-lg shadow-orange-500/20"
               >
                   <PlusIcon className="w-5 h-5" />
                   New Project
-              </button>
+              </motion.button>
             )}
         </div>
         
         {projects.length > 0 ? (
             <motion.div 
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
               variants={{
                 hidden: { opacity: 0 },
                 show: {

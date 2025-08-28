@@ -156,20 +156,20 @@ const App: React.FC = () => {
       transition={{ duration: 0.3 }}
       className="flex flex-col xl:flex-row gap-6 h-full"
     >
-      <div className="bg-light-panel dark:bg-dark-panel rounded-xl shadow-lg border border-light-border dark:border-dark-border flex flex-col xl:w-1/2 h-full">
+      <div className="bg-light-panel dark:bg-dark-panel/80 backdrop-blur-md rounded-xl shadow-lg border border-light-border dark:border-dark-border flex flex-col xl:w-1/2 h-full">
          <div className="p-3 border-b border-light-border dark:border-dark-border flex items-center justify-between flex-shrink-0">
             <h2 className="text-lg font-bold text-light-text-primary dark:text-dark-text-primary">Development</h2>
-            <div className="flex space-x-1 bg-slate-200/50 dark:bg-dark-bg rounded-lg p-1">
+            <div className="flex space-x-1 bg-black/20 dark:bg-dark-bg rounded-lg p-1">
                {tabs.map(tab => (
                     <button
                         key={tab}
                         onClick={() => setActiveTab(tab as 'workflow' | 'code')}
-                        className={`relative px-3 py-1 text-sm font-semibold rounded-md transition-colors ${activeTab !== tab ? 'text-light-text-secondary dark:text-dark-text-secondary hover:bg-white/50 dark:hover:bg-white/5' : ''}`}
+                        className={`relative px-3 py-1 text-sm font-semibold rounded-md transition-colors ${activeTab !== tab ? 'text-light-text-secondary dark:text-dark-text-secondary hover:bg-white/10' : ''}`}
                     >
                         {activeTab === tab && (
                             <motion.div
                                 layoutId="activeTabIndicator"
-                                className="absolute inset-0 bg-light-accent dark:bg-dark-accent rounded-md z-0 shadow"
+                                className="absolute inset-0 bg-dark-accent-primary rounded-md z-0 shadow-lg shadow-orange-500/20"
                                 transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                             />
                         )}
@@ -185,7 +185,7 @@ const App: React.FC = () => {
            {activeTab === 'code' && <CodePreview code={project.generatedCode} />}
         </div>
       </div>
-      <div className="bg-light-panel dark:bg-dark-panel rounded-xl shadow-lg border border-light-border dark:border-dark-border flex flex-col xl:w-1/2 h-full">
+      <div className="bg-light-panel dark:bg-dark-panel/80 backdrop-blur-md rounded-xl shadow-lg border border-light-border dark:border-dark-border flex flex-col xl:w-1/2 h-full">
          <div className="flex-grow p-1 sm:p-2 md:p-4">
             <AppPreview code={project.generatedCode} />
          </div>
@@ -210,7 +210,7 @@ const App: React.FC = () => {
             projectStatus={activeProject?.status}
             onBack={() => setActiveProjectId(null)}
         />
-        <main className="flex-1 p-4 sm:p-6 overflow-y-auto">
+        <main className="flex-1 p-4 sm:p-8 overflow-y-auto">
           <AnimatePresence mode="wait">
             {activeProject ? renderWorkspace(activeProject) : (
                 <motion.div

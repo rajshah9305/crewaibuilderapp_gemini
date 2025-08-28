@@ -14,10 +14,10 @@ export const CodePreview: React.FC<{ code: string }> = ({ code }) => {
   };
 
   return (
-    <div className="relative h-full bg-light-panel dark:bg-dark-bg rounded-lg flex flex-col overflow-hidden border border-light-border dark:border-dark-border">
+    <div className="relative h-full bg-light-panel dark:bg-dark-bg/50 rounded-lg flex flex-col overflow-hidden border border-light-border dark:border-dark-border">
       <button
         onClick={handleCopy}
-        className="absolute top-3 right-3 z-10 bg-slate-700/50 hover:bg-slate-600 text-white dark:text-dark-text-secondary text-xs font-bold py-1 px-3 rounded-md transition-colors disabled:opacity-50 backdrop-blur-sm"
+        className="absolute top-3 right-3 z-10 bg-slate-800/50 hover:bg-slate-700 text-white dark:text-dark-text-secondary text-xs font-bold py-1 px-3 rounded-md transition-colors disabled:opacity-50 backdrop-blur-sm"
         disabled={!code}
         aria-label="Copy code to clipboard"
       >
@@ -46,8 +46,8 @@ export const CodePreview: React.FC<{ code: string }> = ({ code }) => {
         </SyntaxHighlighter>
       </div>
       <style>{`
-        .dark .hljs { background-color: #0f172a !important; color: #e2e8f0; }
-        .light .hljs { background-color: #f8fafc !important; color: #1e293b; }
+        .dark .hljs { background-color: transparent !important; color: #e2e8f0; }
+        .light .hljs { background-color: #ffffff !important; color: #000000; }
         .dark .hljs-comment, .dark .hljs-quote { color: #94a3b8; }
         .light .hljs-comment, .light .hljs-quote { color: #64748b; }
         .dark .hljs-tag, .dark .hljs-string { color: #818cf8; } /* Indigo-400 */

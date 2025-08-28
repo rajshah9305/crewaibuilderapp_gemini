@@ -36,7 +36,7 @@ export const AppPreview: React.FC<{ code: string }> = ({ code }) => {
           <div className="w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-700"></div>
           <div className="w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-700"></div>
         </div>
-        <div className="flex-1 text-center text-xs sm:text-sm font-mono text-light-text-secondary dark:text-dark-text-secondary bg-slate-200 dark:bg-dark-panel rounded-md px-2 sm:px-4 py-1.5 mx-1 sm:mx-2 truncate">
+        <div className="flex-1 text-center text-xs sm:text-sm font-mono text-light-text-secondary dark:text-dark-text-secondary bg-slate-200 dark:bg-dark-panel/50 rounded-md px-2 sm:px-4 py-1.5 mx-1 sm:mx-2 truncate">
             app-preview.local
         </div>
         <div className="flex items-center space-x-1 text-light-text-secondary dark:text-dark-text-secondary">
@@ -59,9 +59,9 @@ export const AppPreview: React.FC<{ code: string }> = ({ code }) => {
               sandbox="allow-scripts allow-modals allow-forms"
             />
         ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center bg-slate-50 dark:bg-dark-bg text-center p-4">
-             <div className="p-4 bg-light-accent/10 dark:bg-dark-accent/10 rounded-full mb-4">
-                <svg className="w-12 h-12 text-light-accent dark:text-dark-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1">
+          <div className="w-full h-full flex flex-col items-center justify-center bg-slate-50 dark:bg-dark-bg/50 text-center p-4">
+             <div className="p-4 bg-dark-accent-primary/10 rounded-full mb-4">
+                <svg className="w-12 h-12 text-dark-accent-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
             </div>

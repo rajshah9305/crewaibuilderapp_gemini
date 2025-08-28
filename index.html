@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
@@ -19,35 +19,34 @@
               mono: ['JetBrains Mono', 'monospace'],
             },
             colors: {
-              'orange': {
-                '50': '#fff7ed', '100': '#ffedd5', '200': '#fed7aa', '300': '#fdba74', '400': '#fb923c',
-                '500': '#f97316', '600': '#ea580c', '700': '#c2410c', '800': '#9a3412', '900': '#7c2d12', '950': '#431407',
-              },
-              // New black and white palette with orange accent
-              'dark-bg': '#171717',      // neutral-900
-              'dark-panel': '#262626',    // neutral-800
-              'dark-accent': '#fb923c',   // orange-400
-              'dark-accent-hover': '#f97316', // orange-500
-              'dark-text-primary': '#fafafa', // neutral-50
-              'dark-text-secondary': '#a3a3a3', // neutral-400
-              'dark-border': '#404040',  // neutral-700
-              'dark-error': '#f43f5e',   // rose-500
+              'dark-bg': '#0A0A0A',
+              'dark-panel': '#121212',
+              'dark-accent-primary': '#F97316',
+              'dark-accent-primary-hover': '#FB923C',
+              'dark-accent-secondary': '#4F46E5',
+              'dark-text-primary': '#F8FAFC',
+              'dark-text-secondary': '#A1A1AA',
+              'dark-border': 'rgba(255, 255, 255, 0.1)',
+              'dark-error': '#F43F5E',
 
-              'light-bg': '#ffffff',      // white
-              'light-panel': '#ffffff',    // white
-              'light-accent': '#f97316',   // orange-500
-              'light-accent-hover': '#ea580c', // orange-600
-              'light-text-primary': '#000000', // black
-              'light-text-secondary': '#525252', // neutral-600
-              'light-border': '#e5e5e5',  // neutral-200
-              'light-error': '#be123c',   // rose-700
+              'light-bg': '#FFFFFF',
+              'light-panel': '#FFFFFF',
+              'light-accent-primary': '#F97316',
+              'light-accent-primary-hover': '#EA580C',
+              'light-accent-secondary': '#4338CA',
+              'light-text-primary': '#000000',
+              'light-text-secondary': '#555555',
+              'light-border': '#DDDDDD',
+              'light-error': '#BE123C',
             },
             animation: {
               'spin-slow': 'spin 3s linear infinite',
-              'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
               'fade-in': 'fadeIn 0.5s ease-in-out',
               'slide-up': 'slideUp 0.5s ease-in-out',
-              'border-pulse': 'borderPulse 2s infinite',
+              'border-pulse': 'borderPulse 2.5s infinite ease-in-out',
+              'background-pan': 'backgroundPan 15s linear infinite',
+              'glow': 'glow 2s ease-in-out infinite alternate'
             },
             keyframes: {
               fadeIn: {
@@ -59,14 +58,63 @@
                 '100%': { opacity: 1, transform: 'translateY(0)' },
               },
               borderPulse: {
-                '0%, 100%': { 'border-opacity': '0.3' },
-                '50%': { 'border-opacity': '1' },
+                '0%, 100%': { 'border-color': 'rgba(249, 115, 22, 0.4)' },
+                '50%': { 'border-color': 'rgba(249, 115, 22, 0.8)' },
               },
+              backgroundPan: {
+                '0%': { 'background-position': '0% 50%' },
+                '50%': { 'background-position': '100% 50%' },
+                '100%': { 'background-position': '0% 50%' }
+              },
+               glow: {
+                'from': { 'text-shadow': '0 0 5px #F97316, 0 0 10px #F97316' },
+                'to': { 'text-shadow': '0 0 10px #F97316, 0 0 20px #F97316' }
+              }
             }
           }
         }
       }
     </script>
+    <style>
+      :root {
+        --dark-bg: #0A0A0A;
+        --dark-border: rgba(255, 255, 255, 0.1);
+      }
+      .dark body {
+        background-color: var(--dark-bg);
+        background-image:
+          linear-gradient(var(--dark-border) 1px, transparent 1px),
+          linear-gradient(to right, var(--dark-border) 1px, var(--dark-bg) 1px);
+        background-size: 40px 40px;
+        animation: backgroundPan 30s linear infinite;
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 10px;
+      }
+      .dark ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+      }
+      .dark ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.2);
+      }
+      .dark ::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+    </style>
   <script type="importmap">
 {
   "imports": {
